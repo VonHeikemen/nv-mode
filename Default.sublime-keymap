@@ -1,0 +1,705 @@
+[
+	// Modes
+	{
+		"keys": ["i"],
+		"command": "nv_enter_insert_mode",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["a"],
+		"command": "nv_enter_insert_mode",
+		"args": {"after": true},
+		"context": [
+			{
+				"key": "setting.command_mode",
+				"operand": true
+			},
+			{
+				"key": "selection_empty",
+				"operator": "equal",
+				"operand": true,
+				"match_all": true
+			}
+		]
+	},
+	{
+		"keys": ["o"],
+		"command": "nv_enter_insert_mode",
+		"args": {"below": true},
+		"context": [
+			{
+				"key": "setting.command_mode",
+				"operand": true
+			},
+			{
+				"key": "selection_empty",
+				"operator": "equal",
+				"operand": true,
+				"match_all": true
+			},
+		]
+	},
+	{
+		"keys": ["escape"],
+		"command": "nv_enter_normal_mode",
+		"context": [
+			{"key": "setting.command_mode", "operand": false},
+			{"key": "setting.is_widget", "operand": false}
+		]
+	},
+	{
+		"keys": ["escape"],
+		"command": "nv_enter_normal_mode",
+		"context": [
+			{"key": "setting.visual_mode", "operand": true },
+			{"key": "setting.is_widget", "operand": false}
+		]
+	},
+	{
+		"keys": ["v"],
+		"command": "nv_enter_normal_mode",
+		"context": [ {"key": "setting.visual_mode", "operand": true } ]
+	},
+	{
+		"keys": ["v"],
+		"command": "nv_enter_visual_mode",
+		"context": [ {"key": "setting.command_mode", "operand": true } ]
+	},
+	
+	{
+		"keys": ["i"],
+		"command": "nv_enter_insert_mode",
+		"context": [ {"key": "setting.visual_mode", "operand": true } ]
+	},
+
+	// Normal Mode
+	// Navigation
+	{
+		"keys": ["h"],
+		"command": "move",
+		"args": {"by": "characters", "forward": false},
+		"context": [ 
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["l"],
+		"command": "move",
+		"args": {"by": "characters", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["k"],
+		"command": "move",
+		"args": {"by": "lines", "forward": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["j"],
+		"command": "move",
+		"args": {"by": "lines", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["backspace"],
+		"command": "move",
+		"args": {"by": "characters", "forward": false},
+		"context": [ 
+			{"key": "setting.command_mode", "operand": true},
+		]
+	},
+	{
+		"keys": [" "],
+		"command": "move",
+		"args": {"by": "characters", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+		]
+	},
+	{
+		"keys": ["enter"],
+		"command": "move",
+		"args": {"by": "lines", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+		]
+	},
+	{
+		"keys": ["H"],
+		"command": "nv_move_to_top",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["L"],
+		"command": "nv_move_to_bottom",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["M"],
+		"command": "nv_move_to_middle",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["g", "g"],
+		"command": "move_to",
+		"args": {"to": "bof", "extend": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["G"],
+		"command": "move_to",
+		"args": {"to": "eof", "extend": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+f"],
+		"command": "move",
+		"args": {"by": "pages", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+b"],
+		"command": "move",
+		"args": {"by": "pages", "forward": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+u"],
+		"command": "nv_move_half_page_up",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+d"],
+		"command": "nv_move_half_page_down",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+y"],
+		"command": "scroll_lines",
+		"args": {"amount": 3.0 },
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+e"],
+		"command": "scroll_lines",
+		"args": {"amount": -3.0 },
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["z", "z"],
+		"command": "show_at_center",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+
+	// Jumps
+	{
+		"keys": ["%"],
+		"command": "move_to",
+		"args": {"to": "brackets"},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["0"],
+		"command": "move_to",
+		"args": {"to": "bol", "extend": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["$"],
+		"command": "move_to",
+		"args": {"to": "eol", "extend": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["^"],
+		"command": "nv_move_to_first_char_in_line",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["g", "_"],
+		"command": "nv_move_to_last_char_in_line",
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["w"],
+		"command": "move",
+		"args": {"by": "words", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["b"],
+		"command": "move",
+		"args": {"by": "words", "forward": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["e"],
+		"command": "move",
+		"args": {"by": "word_ends", "forward": true},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["g", "e"],
+		"command": "move",
+		"args": {"by": "word_ends", "forward": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": false}
+		]
+	},
+	{
+		"keys": ["ctrl+i"],
+		"command": "jump_forward",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+o"],
+		"command": "jump_back",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["n"],
+		"command": "find_next",
+		"args": {"select_text": false},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["N"],
+		"command": "find_prev",
+		"args": {"select_text": false},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["*"],
+		"command": "find_under",
+		"args": {"select_text": false},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+
+	{
+		"keys": ["#"],
+		"command": "find_under_prev",
+		"args": {"select_text": false},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+
+	// Visual Mode
+	// Navigation
+	{
+		"keys": ["h"],
+		"command": "move",
+		"args": {"by": "characters", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["l"],
+		"command": "move",
+		"args": {"by": "characters", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["k"],
+		"command": "move",
+		"args": {"by": "lines", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["j"],
+		"command": "move",
+		"args": {"by": "lines", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["H"],
+		"command": "nv_move_to_top",
+		"args": {"extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["L"],
+		"command": "nv_move_to_bottom",
+		"args": {"extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["M"],
+		"command": "nv_move_to_middle",
+		"args": {"extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "g"],
+		"command": "move_to",
+		"args": {"to": "bof", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["G"],
+		"command": "move_to",
+		"args": {"to": "eof", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+f"],
+		"command": "move",
+		"args": {"by": "pages", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+b"],
+		"command": "move",
+		"args": {"by": "pages", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+
+	// Jumps
+	{
+		"keys": ["%"],
+		"command": "move_to",
+		"args": {"to": "brackets", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["0"],
+		"command": "move_to",
+		"args": {"to": "bol", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["$"],
+		"command": "move_to",
+		"args": {"to": "eol", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["^"],
+		"command": "nv_move_to_first_char_in_line",
+		"args": {"extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "_"],
+		"command": "nv_move_to_last_char_in_line",
+		"args": {"extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["w"],
+		"command": "move",
+		"args": {"by": "words", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["b"],
+		"command": "move",
+		"args": {"by": "words", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["e"],
+		"command": "move",
+		"args": {"by": "word_ends", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "e"],
+		"command": "move",
+		"args": {"by": "word_ends", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+
+
+	// Window commands
+	{
+		"keys": ["ctrl+w"],
+		"command": "noop",
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "s"],
+		"command": "set_layout",
+		"args": {
+			"cols": [0.0, 1.0],
+			"rows": [0.0, 0.5, 1.0],
+			"cells": [[0, 0, 1, 1], [0, 1, 1, 2]]
+		},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{ 
+		"keys": ["ctrl+w", "v"],
+		"command": "set_layout",
+		"args": {
+			"cols": [0.0, 0.5, 1.0],
+			"rows": [0.0, 1.0],
+			"cells": [[0, 0, 1, 1], [1, 0, 2, 1]]
+		},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "c"],
+		"command": "close",
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "q"],
+		"command": "close_pane",
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "p"],
+		"command": "focus_neighboring_group",
+		"args": {"forward": false},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "n"],
+		"command": "focus_neighboring_group",
+		"args": {"forward": true},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "P"],
+		"command": "move_to_neighboring_group",
+		"args": {"forward": false},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "N"],
+		"command": "move_to_neighboring_group",
+		"args": {"forward": true},
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["ctrl+w", "m"],
+		"command": "new_pane",
+		"context": [
+			{"key": "setting.nv_mode_enable_ctrl_w", "operand": true},
+			{"key": "setting.command_mode", "operand": true}
+		]
+	},
+	{
+		"keys": ["g", "t"],
+		"command": "next_view",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "T"],
+		"command": "prev_view",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "]"],
+		"command": "goto_definition",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+
+	// Commands
+	{
+		"keys": ["J"],
+		"command": "join_lines",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["="],
+		"command": "reindent",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["u"],
+		"command": "undo",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+r"],
+		"command": "redo",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["."],
+		"command": "repeat",
+		"context": [{"key": "setting.command_mode", "operand": true}]
+	},
+	{
+		"keys": ["y"],
+		"command": "copy",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["p"],
+		"command": "paste_and_indent",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["P"],
+		"command": "nv_paste_after",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["x"], 
+		"command": "right_delete", 
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["d", "d"], 
+		"command": "cut", 
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["~"],
+		"command": "swap_case",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "u"],
+		"command": "lower_case",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "U"],
+		"command": "upper_case",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["g", "c"],
+		"command": "toggle_comment",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["m"],
+		"command": "toggle_bookmark",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+m"],
+		"command": "clear_bookmarks",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["`", "o"],
+		"command": "prev_bookmark",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["`", "i"],
+		"command": "next_bookmark",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["/"],
+		"command": "show_panel",
+		"args": {"panel": "incremental_find", "reverse": false},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["?"],
+		"command": "show_panel",
+		"args": {"panel": "incremental_find", "reverse": true},
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["z", "c"],
+		"command": "fold",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["z", "o"],
+		"command": "unfold",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["z", "O"],
+		"command": "unfold_all",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	}
+]
