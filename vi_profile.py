@@ -15,8 +15,20 @@ def normal_mode(view):
   if highlight_line:
     view.settings().set('highlight_line', True)
 
+def exit_normal_mode(view):
+  view.settings().set('command_mode', False)
+  view.settings().set('visual_mode', False)
+  view.settings().set('inverse_caret_state', False)
+
+  disable_highlight = view.settings().get(
+    'nv_toggle_hightlight_line_on_command_mode'
+  )
+
+  if disable_highlight:
+    view.settings().set('highlight_line', False)
+
 def clear_selection(view):
-  selection = view.sel()[0].end() - 1
+  selection = view.sel()[0].end()
   new_region = sublime.Region(selection, selection)
   view.sel().clear()
   view.sel().add(new_region)
@@ -25,9 +37,6 @@ class NvEnterInsertMode(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     insert_newline = kwargs.get('below', False)
     insert_after = kwargs.get('after', False)
-    toggle_highlight_line = self.view.settings().get(
-      'nv_toggle_hightlight_line_on_command_mode'
-    )
 
     if insert_newline:
       self.view.run_command('move_to', {"to": "eol"})
@@ -36,13 +45,8 @@ class NvEnterInsertMode(sublime_plugin.TextCommand):
     if insert_after:
       self.view.run_command('move', {"by": "characters", "forward": True})
     
-    self.view.settings().set('command_mode', False)
-    self.view.settings().set('visual_mode', False)
-    self.view.settings().set('inverse_caret_state', False)
     self.view.set_status('mode', 'INSERT MODE')
-
-    if toggle_highlight_line:
-      self.view.settings().set('highlight_line', False)
+    exit_normal_mode(self.view)
 
 class NvEnterNormalMode(sublime_plugin.TextCommand):
   def run(self, edit):
@@ -56,12 +60,22 @@ class NvEnterVisualMode(sublime_plugin.TextCommand):
     self.view.settings().set('visual_mode', True)
     self.view.set_status('mode', 'VISUAL MODE')
 
-class NvInputStateTracker(sublime_plugin.EventListener):
-  def __init__(self):
-    for w in sublime.windows():
-      for v in w.views():
-        normal_mode(v)
+class NvDisableAndExit(sublime_plugin.ApplicationCommand):
+  def run(self):
+    name = 'NvMode'
+    settings = sublime.load_settings('Preferences.sublime-settings')
+    ignored_packages = settings.get('ignored_packages', [])
 
+    ignored_packages.append(name)
+    ignored_packages.sort()
+    settings.set('ignored_packages', ignored_packages)
+    sublime.save_settings('Preferences.sublime-settings')
+    sublime.status_message('{} Package disabled'.format(name))
+
+    plugin_unloaded()
+    sublime.active_window().run_command('exit')
+
+class NvStateTracker(sublime_plugin.EventListener):
   def on_load(self, view):
     normal_mode(view)
 
@@ -77,13 +91,14 @@ class NvInputStateTracker(sublime_plugin.EventListener):
     if is_command_mode and view.has_non_empty_selection_region():
       view.run_command('nv_enter_visual_mode')
 
-
-# Called when the plugin is unloaded (e.g., perhaps it just got added to
-# ignored_packages). Ensure files aren't left in command mode.
-def unload_handler():
+def plugin_loaded():
   for w in sublime.windows():
     for v in w.views():
-      v.settings().set('command_mode', False)
-      v.settings().set('visual_mode', False)
-      v.settings().set('inverse_caret_state', False) 
+      normal_mode(v)
+
+def plugin_unloaded():
+  for w in sublime.windows():
+    for v in w.views():
+      exit_normal_mode(v)
       v.erase_status('mode')
+

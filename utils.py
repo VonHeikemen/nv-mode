@@ -1,3 +1,5 @@
+import os
+
 import sublime
 import sublime_plugin
 
@@ -73,7 +75,7 @@ class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
     current_line = self.view.line(self.view.sel()[0])
     line_str = self.view.substr(current_line)
     diff = len(line_str) - len(line_str.rstrip())
-    _, column = self.view.rowcol(current_line.b - diff - 1)
+    _, column = self.view.rowcol(current_line.b - diff)
 
     goto_line(self.view, current_line, col=column, extend=extend)
 
@@ -82,3 +84,31 @@ class NvPasteAfter(sublime_plugin.TextCommand):
     self.view.run_command('move', {"by": "characters", "forward": True})
     self.view.run_command('paste')
 
+class NvOpenTabList(sublime_plugin.WindowCommand): 
+  def run(self):
+    window = sublime.active_window()
+    group = window.views_in_group(window.active_group())
+    result_list = [self._get_info(view) for view in group]
+
+    def on_done(index):
+      if index == -1:
+        return
+
+      window.focus_view(group[index])
+
+    window.show_quick_panel(result_list, on_done)
+
+  def _get_info(self, view):
+    path = view.file_name()
+
+    if path:
+      parent, name = os.path.split(path)
+      parent = os.path.basename(parent)
+    else:
+      parent = ''
+      name = view.name() or 'untitled'
+
+    if view.is_dirty():
+      name += ' *'
+
+    return [name, parent]

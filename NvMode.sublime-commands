@@ -1,0 +1,54 @@
+[
+	{
+		"caption": "NvMode: List open files",
+		"command": "nv_open_tab_list"
+	},
+	{
+		"caption": "NvMode: Disable and exit",
+		"command": "nv_disable_and_exit"
+	},
+	{
+		"caption": "NvMode: Enter Command mode",
+		"command": "nv_enter_normal_mode"
+	},
+	{
+		"caption": "NvMode: Enter Insert mode",
+		"command": "nv_enter_insert_mode"
+	},
+	{
+		"caption": "NvMode: Enter Visual mode",
+		"command": "nv_enter_visual_mode"
+	},
+	{
+		"caption": "NvMode: Move to the top of the screen",
+		"command": "nv_move_to_top"
+	},
+	{
+		"caption": "NvMode: Move to the bottom of the screen",
+		"command": "nv_move_to_bottom"
+	},
+	{
+		"caption": "NvMode: Move to the middle of the screen",
+		"command": "nv_move_to_middle"
+	},
+	{
+		"caption": "NvMode: Move half page up",
+		"command": "nv_move_half_page_up"
+	},
+	{
+		"caption": "NvMode: Move half page down",
+		"command": "nv_move_half_page_down"
+	},
+	{
+		"caption": "NvMode: Move to first character in line",
+		"command": "nv_move_to_first_char_in_line"
+	},
+	{
+		"caption": "NvMode: Move to last character in line",
+		"command": "nv_move_to_last_char_in_line"
+	},
+	{
+		"caption": "NvMode: Paste after cursor",
+		"command": "nv_paste_after"
+	}
+]
