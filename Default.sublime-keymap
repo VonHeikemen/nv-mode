@@ -374,6 +374,42 @@
 		"context": [ {"key": "setting.visual_mode", "operand": true} ]
 	},
 	{
+		"keys": ["left"],
+		"command": "move",
+		"args": {"by": "characters", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["right"],
+		"command": "move",
+		"args": {"by": "characters", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["up"],
+		"command": "move",
+		"args": {"by": "lines", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["down"],
+		"command": "move",
+		"args": {"by": "lines", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+left"],
+		"command": "move",
+		"args": {"by": "words", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["ctrl+right"],
+		"command": "move",
+		"args": {"by": "word_ends", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
 		"keys": ["H"],
 		"command": "nv_move_to_top",
 		"args": {"extend": true},
@@ -415,6 +451,18 @@
 		"args": {"by": "pages", "forward": false, "extend": true},
 		"context": [ {"key": "setting.visual_mode", "operand": true} ]
 	},
+	{
+		"keys": ["pagedown"],
+		"command": "move",
+		"args": {"by": "pages", "forward": true, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["pageup"],
+		"command": "move",
+		"args": {"by": "pages", "forward": false, "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
 
 	// Jumps
 	{
@@ -431,6 +479,18 @@
 	},
 	{
 		"keys": ["$"],
+		"command": "move_to",
+		"args": {"to": "eol", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["home"],
+		"command": "move_to",
+		"args": {"to": "bol", "extend": true},
+		"context": [ {"key": "setting.visual_mode", "operand": true} ]
+	},
+	{
+		"keys": ["end"],
 		"command": "move_to",
 		"args": {"to": "eol", "extend": true},
 		"context": [ {"key": "setting.visual_mode", "operand": true} ]
@@ -588,6 +648,16 @@
 	{
 		"keys": ["J"],
 		"command": "join_lines",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["<"],
+		"command": "unindent",
+		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": [">"],
+		"command": "indent",
 		"context": [ {"key": "setting.command_mode", "operand": true} ]
 	},
 	{
