@@ -23,13 +23,13 @@ def goto_line(view, line,**kwargs):
     view.sel().add(new_region)
   else:
     view.sel().add(destination)
-    view.show(destination)
+    view.show(destination, False)
 
 class NvMoveToBottomCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
     visible_lines = get_visible_lines(self.view) 
-    last_line = visible_lines[-2]
+    last_line = visible_lines[-1]
 
     goto_line(self.view, last_line, extend=extend)
 
@@ -45,7 +45,7 @@ class NvMoveToMiddleCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
     visible_lines = get_visible_lines(self.view) 
-    middle = (len(visible_lines) // 2) - 1
+    middle = (len(visible_lines) // 2)
     middle_line = visible_lines[middle]
 
     goto_line(self.view, middle_line, extend=extend)
@@ -88,7 +88,8 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
   def run(self):
     window = sublime.active_window()
     group = window.views_in_group(window.active_group())
-    result_list = [self._get_info(view) for view in group]
+    active_view_id = window.active_view().id()
+    result_list = [self.get_file_info(view, active_view_id) for view in group]
 
     def on_done(index):
       if index == -1:
@@ -98,7 +99,7 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
 
     window.show_quick_panel(result_list, on_done)
 
-  def _get_info(self, view):
+  def get_file_info(self, view, current_view):
     path = view.file_name()
 
     if path:
@@ -107,6 +108,9 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
     else:
       parent = ''
       name = view.name() or 'untitled'
+
+    if view.id() == current_view:
+      name = '~ {}'.format(name)
 
     if view.is_dirty():
       name += ' *'
