@@ -28,7 +28,7 @@ def exit_normal_mode(view):
     view.settings().set('highlight_line', False)
 
 def clear_selection(view):
-  selection = view.sel()[0].end()
+  selection = view.sel()[0].b
   new_region = sublime.Region(selection, selection)
   view.sel().clear()
   view.sel().add(new_region)
