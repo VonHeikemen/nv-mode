@@ -44,7 +44,7 @@ class NvEnterInsertMode(sublime_plugin.TextCommand):
 
     if insert_after:
       self.view.run_command('move', {"by": "characters", "forward": True})
-    
+
     self.view.set_status('mode', 'INSERT MODE')
     exit_normal_mode(self.view)
 
@@ -85,11 +85,6 @@ class NvStateTracker(sublime_plugin.EventListener):
   def on_clone(self, view):
     self.on_load(view)
 
-  def on_selection_modified(self, view):
-    is_command_mode = view.settings().get('command_mode')
-
-    if is_command_mode and view.has_non_empty_selection_region():
-      view.run_command('nv_enter_visual_mode')
 
 def plugin_loaded():
   for w in sublime.windows():
