@@ -531,6 +531,7 @@
 		"args": {"by": "word_ends", "forward": false, "extend": true},
 		"context": [ {"key": "setting.visual_mode", "operand": true} ]
 	},
+	
 
 
 	// Window commands
@@ -750,6 +751,15 @@
 		"command": "show_panel",
 		"args": {"panel": "incremental_find", "reverse": false},
 		"context": [ {"key": "setting.command_mode", "operand": true} ]
+	},
+	{
+		"keys": ["/"],
+		"command": "show_panel",
+		"args": {"panel": "find", "reverse": false},
+		"context": [
+			{"key": "setting.command_mode", "operand": true},
+			{"key": "setting.visual_mode", "operand": true}
+		]
 	},
 	{
 		"keys": ["?"],
