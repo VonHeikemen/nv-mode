@@ -89,7 +89,7 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
     window = sublime.active_window()
     group = window.views_in_group(window.active_group())
     active_view_id = window.active_view().id()
-    result_list = [self.get_file_info(view, active_view_id) for view in group]
+    result_list = [self.get_file_info(view, active_view_id, i) for (i, view) in enumerate(group, start=1)]
 
     def on_done(index):
       if index == -1:
@@ -99,7 +99,7 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
 
     window.show_quick_panel(result_list, on_done)
 
-  def get_file_info(self, view, current_view):
+  def get_file_info(self, view, current_view, index):
     path = view.file_name()
 
     if path:
@@ -111,6 +111,8 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
 
     if view.id() == current_view:
       name = '~ {}'.format(name)
+    else:
+      name = '[{}] - {}'.format(index, name)
 
     if view.is_dirty():
       name += ' *'
