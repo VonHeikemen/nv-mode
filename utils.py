@@ -7,7 +7,24 @@ def get_visible_lines(view):
   current_view = view.visible_region()
   return view.lines(current_view)
 
-def goto_line(view, line,**kwargs):
+def move_to(view, **kwargs):
+  line = kwargs.get('line')
+  sel = kwargs.get('selection')
+  extend = kwargs.get('extend', False)
+  col = kwargs.get('col', 0)
+
+  row, _ = view.rowcol(line.a)
+  point = view.text_point(row, col)
+  destination = sublime.Region(point)
+
+  if extend:
+    new_region = sublime.Region(sel.a, destination.end())
+    return new_region
+  else:
+    return destination
+
+
+def goto_line(view, line, **kwargs):
   extend = kwargs.get('extend', False)
   col = kwargs.get('col', 0)
 
@@ -45,7 +62,7 @@ class NvMoveToMiddleCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
     visible_lines = get_visible_lines(self.view)
-    middle = (len(visible_lines) // 2)
+    middle = (len(visible_lines) // 2) - 1
     middle_line = visible_lines[middle]
 
     goto_line(self.view, middle_line, extend=extend)
@@ -63,21 +80,39 @@ class NvMoveHalfPageDown(sublime_plugin.TextCommand):
 class NvMoveToFirstCharInLine(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
-    current_line = self.view.line(self.view.sel()[0])
-    line_str = self.view.substr(current_line)
-    diff = len(line_str) - len(line_str.lstrip())
+    newones = []
 
-    goto_line(self.view, current_line, col=diff, extend=extend)
+    for sel in self.view.sel():
+      cursor_pos = sel.b
+      current_line = self.view.line(sublime.Region(cursor_pos, cursor_pos))
+      line_str = self.view.substr(current_line)
+      diff = len(line_str) - len(line_str.lstrip())
+
+      new_region = move_to(self.view, selection=sel, line=current_line, col=diff, extend=extend)
+      newones.append(new_region)
+
+    self.view.sel().clear()
+    self.view.sel().add_all(newones)
+
+
 
 class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
-    current_line = self.view.line(self.view.sel()[0])
-    line_str = self.view.substr(current_line)
-    diff = len(line_str) - len(line_str.rstrip())
-    _, column = self.view.rowcol(current_line.b - diff)
+    newones = []
 
-    goto_line(self.view, current_line, col=column, extend=extend)
+    for sel in self.view.sel():
+      cursor_pos = sel.b
+      current_line = self.view.line(sublime.Region(cursor_pos, cursor_pos))
+      line_str = self.view.substr(current_line)
+      diff = len(line_str) - len(line_str.rstrip())
+      _, column = self.view.rowcol(current_line.b - diff)
+
+      new_region = move_to(self.view, selection=sel, line=current_line, col=column, extend=extend)
+      newones.append(new_region)
+
+    self.view.sel().clear()
+    self.view.sel().add_all(newones)
 
 class NvPasteAfter(sublime_plugin.TextCommand):
   def run(self, edit):
@@ -89,32 +124,64 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
     window = sublime.active_window()
     group = window.views_in_group(window.active_group())
     active_view_id = window.active_view().id()
-    result_list = [self.get_file_info(view, active_view_id, i) for (i, view) in enumerate(group, start=1)]
+
+    result_list = [None]
+    groups = [None]
+
+    for (i, view) in enumerate(group, start=1):
+      if active_view_id == view.id():
+        groups[0] = i - 1
+        result_list[0] = self.get_file_info(view, i, True)
+      else:
+        groups.append(i - 1)
+        result_list.append(self.get_file_info(view, i, False))
+
 
     def on_done(index):
       if index == -1:
         return
 
-      window.focus_view(group[index])
+      chosen = groups[index]
+      window.focus_view(group[chosen])
 
-    window.show_quick_panel(result_list, on_done)
+    window.show_quick_panel(result_list, on_done, selected_index=1)
 
-  def get_file_info(self, view, current_view, index):
+  def get_file_info(self, view, index, current):
     path = view.file_name()
 
     if path:
-      parent, name = os.path.split(path)
-      parent = os.path.basename(parent)
+      parent, name = self.filepath(path)
     else:
       parent = ''
       name = view.name() or 'untitled'
 
-    if view.id() == current_view:
-      name = '~ {}'.format(name)
-    else:
-      name = '[{}] - {}'.format(index, name)
-
     if view.is_dirty():
-      name += ' *'
+      mark = '+'
+    else:
+      mark = '-'
+
+    if current:
+      name = '[%] {} {}'.format(mark, name)
+    else:
+      name = '[{}] {} {}'.format(index, mark, name)
 
     return [name, parent]
+
+  def filepath(self, path):
+    folders = sublime.active_window().folders()
+    parent, name = os.path.split(path)
+    res = []
+
+    if len(folders) > 1:
+      for dir in folders:
+        if dir not in parent:
+          continue
+
+        base, root = os.path.split(dir)
+        res.append(os.path.join('/', parent.replace(base, "")))
+    else:
+        res.append(os.path.join('/', parent.replace(folders[0], "")))
+
+    parent = "\n".join(res)[1:]
+    return (parent, name)
+
