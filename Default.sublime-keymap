@@ -510,7 +510,7 @@
 	{
 		"keys": ["w"],
 		"command": "move",
-		"args": {"by": "words", "forward": true, "extend": true},
+		"args": {"by": "word_ends", "forward": true, "extend": true},
 		"context": [ {"key": "setting.visual_mode", "operand": true} ]
 	},
 	{
