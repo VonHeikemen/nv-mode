@@ -136,15 +136,19 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
         groups.append(i - 1)
         result_list.append(self.get_file_info(view, i, False))
 
+    def preview(index):
+      highlighted = groups[index]
+      window.open_file(group[highlighted].file_name(), sublime.TRANSIENT)
 
     def on_done(index):
       if index == -1:
-        return
+        chosen = groups[0]
+      else:
+        chosen = groups[index]
 
-      chosen = groups[index]
       window.focus_view(group[chosen])
 
-    window.show_quick_panel(result_list, on_done, selected_index=1)
+    window.show_quick_panel(result_list, on_done, on_highlight=preview)
 
   def get_file_info(self, view, index, current):
     path = view.file_name()
