@@ -138,15 +138,26 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
 
     def preview(index):
       highlighted = groups[index]
-      window.open_file(group[highlighted].file_name(), sublime.TRANSIENT)
+      filename = group[highlighted].file_name()
+
+      if filename:
+        window.open_file(filename, sublime.TRANSIENT)
+      else:
+        window.focus_view(group[highlighted])
 
     def on_done(index):
       if index == -1:
-        chosen = groups[0]
+        current = groups[0]
+        window.focus_view(group[current])
       else:
         chosen = groups[index]
+        filename = group[chosen].file_name()
 
-      window.focus_view(group[chosen])
+        if filename:
+          window.open_file(filename, sublime.REPLACE_MRU)
+        else:
+          window.focus_view(group[chosen])
+
 
     window.show_quick_panel(result_list, on_done, on_highlight=preview)
 
