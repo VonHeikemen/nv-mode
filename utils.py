@@ -42,6 +42,7 @@ def goto_line(view, line, **kwargs):
     view.sel().add(destination)
     view.show(destination, False)
 
+
 class NvMoveToBottomCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
@@ -49,6 +50,7 @@ class NvMoveToBottomCommand(sublime_plugin.TextCommand):
     last_line = visible_lines[-1]
 
     goto_line(self.view, last_line, extend=extend)
+
 
 class NvMoveToTopCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
@@ -58,24 +60,28 @@ class NvMoveToTopCommand(sublime_plugin.TextCommand):
 
     goto_line(self.view, first_line, extend=extend)
 
+
 class NvMoveToMiddleCommand(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
     extend=kwargs.get('extend', False)
     visible_lines = get_visible_lines(self.view)
-    middle = (len(visible_lines) // 2) - 1
+    middle = len(visible_lines) // 2
     middle_line = visible_lines[middle]
 
     goto_line(self.view, middle_line, extend=extend)
+
 
 class NvMoveHalfPageUp(sublime_plugin.TextCommand):
   def run(self, edit):
     self.view.run_command('nv_move_to_top')
     self.view.run_command('show_at_center')
 
+
 class NvMoveHalfPageDown(sublime_plugin.TextCommand):
   def run(self, edit):
     self.view.run_command('nv_move_to_bottom')
     self.view.run_command('show_at_center')
+
 
 class NvMoveToFirstCharInLine(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
@@ -93,7 +99,6 @@ class NvMoveToFirstCharInLine(sublime_plugin.TextCommand):
 
     self.view.sel().clear()
     self.view.sel().add_all(newones)
-
 
 
 class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
@@ -114,16 +119,19 @@ class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
     self.view.sel().clear()
     self.view.sel().add_all(newones)
 
+
 class NvPasteAfter(sublime_plugin.TextCommand):
   def run(self, edit):
     self.view.run_command('move', {"by": "characters", "forward": True})
     self.view.run_command('paste')
+
 
 class NvOpenTabList(sublime_plugin.WindowCommand):
   def run(self):
     window = sublime.active_window()
     group = window.views_in_group(window.active_group())
     active_view_id = window.active_view().id()
+    self.prev_in_stack = -1
 
     result_list = [None]
     groups = [None]
@@ -136,6 +144,20 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
         groups.append(i - 1)
         result_list.append(self.get_file_info(view, i, False))
 
+    def on_done(index):
+      if index == -1:
+        if self.prev_in_stack > -1:
+          prev = groups[self.prev_in_stack]
+          window.focus_view(group[prev])
+
+        current = groups[0]
+        window.focus_view(group[current])
+      else:
+        current = groups[0]
+        window.focus_view(group[current])
+        chosen = groups[index]
+        window.focus_view(group[chosen])
+
     def preview(index):
       highlighted = groups[index]
       filename = group[highlighted].file_name()
@@ -143,21 +165,8 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
       if filename:
         window.open_file(filename, sublime.TRANSIENT)
       else:
+        self.preserve_stack_view(window)
         window.focus_view(group[highlighted])
-
-    def on_done(index):
-      if index == -1:
-        current = groups[0]
-        window.focus_view(group[current])
-      else:
-        chosen = groups[index]
-        filename = group[chosen].file_name()
-
-        if filename:
-          window.open_file(filename, sublime.REPLACE_MRU)
-        else:
-          window.focus_view(group[chosen])
-
 
     window.show_quick_panel(result_list, on_done, on_highlight=preview)
 
@@ -199,4 +208,10 @@ class NvOpenTabList(sublime_plugin.WindowCommand):
 
     parent = "\n".join(res)[1:]
     return (parent, name)
+
+  def preserve_stack_view(self, window):
+    if self.prev_in_stack == -1:
+      window.run_command('next_view_in_stack')
+      _, view_index = window.get_view_index(window.active_view())
+      self.prev_in_stack = view_index + 1
 
