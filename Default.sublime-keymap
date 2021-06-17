@@ -727,26 +727,6 @@
 		"context": [ {"key": "setting.command_mode", "operand": true} ]
 	},
 	{
-		"keys": ["m"],
-		"command": "toggle_bookmark",
-		"context": [ {"key": "setting.command_mode", "operand": true} ]
-	},
-	{
-		"keys": ["ctrl+m"],
-		"command": "clear_bookmarks",
-		"context": [ {"key": "setting.command_mode", "operand": true} ]
-	},
-	{
-		"keys": ["`", "o"],
-		"command": "prev_bookmark",
-		"context": [ {"key": "setting.command_mode", "operand": true} ]
-	},
-	{
-		"keys": ["`", "i"],
-		"command": "next_bookmark",
-		"context": [ {"key": "setting.command_mode", "operand": true} ]
-	},
-	{
 		"keys": ["/"],
 		"command": "show_panel",
 		"args": {"panel": "incremental_find", "reverse": false},
