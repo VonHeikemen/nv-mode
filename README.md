@@ -65,6 +65,7 @@ The default value is `false`. When set to `true` will highlight the line where t
 The keys marked with an `*` are bound to a command I implemented in this plugin. Everything else uses sublime's built-in features and commands.
 
 | Key | Command | Extends selection on visual mode |
+| --- |   ---   | --- |
 | `h` | Move cursor to the left | yes |
 | `l` | Move cursor to the right | yes |
 | `k` | Move cursor up | yes |
@@ -101,6 +102,7 @@ The keys marked with an `*` are bound to a command I implemented in this plugin.
 ### Window commands
 
 | Key | Command |
+| --- |   ---   |
 | `gt` | Focus next tab |
 | `gT` | Focus previous tab |
 | `ctrl+w m` | Create a new pane |
@@ -116,6 +118,7 @@ The keys marked with an `*` are bound to a command I implemented in this plugin.
 ### Other commands
 
 | Key | Command |
+| --- |   ---   |
 | `J` | Join lines |
 | `<` | Undindent line/selected text |
 | `>` | Indent line/selected text |
