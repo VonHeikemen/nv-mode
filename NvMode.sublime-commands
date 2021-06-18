@@ -1,5 +1,4 @@
 [
-	
 	{
 		"caption": "NvMode: Disable and exit",
 		"command": "nv_disable_and_exit"
