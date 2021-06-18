@@ -97,7 +97,7 @@ The keys marked with an `*` are bound to a command I implemented in this plugin.
 | `N` | Move cursor to the previous match of the search | no |
 | `*` | Start a search using the word under the cursor and move to the closes match | no |
 | `#` | Start a "reverse" search using the word under the cursor and move to the closes match | no |
-| `g]` | Go to definition of the symbol under the cursor |
+| `g]` | Go to definition of the symbol under the cursor | no |
 
 ### Window commands
 
@@ -170,7 +170,7 @@ $packages/User/NvMode/Default.sublime-keymap
 ]
 ```
 
-In here I'm remapping `]t` to the `next_view` command and `[t` to `prev_view` (they are the equivalent of `gt` and `gT`). And the context object tells sublime that they should valid whenever `command_mode` is enabled. Meaning this will work on command mode and also visual mode.
+In here I'm remapping `]t` to the `next_view` command and `[t` to `prev_view` (they are the equivalent of `gt` and `gT`). And the context object tells sublime that they should be valid whenever `command_mode` is enabled. Meaning this will work on command mode and also visual mode.
 
 If you want a key binding that only works on command mode but not in visual mode you'll need this context:
 
@@ -199,6 +199,23 @@ And finally if you set `setting.command_mode` to `false`, that means "insert mod
 ```
 
 If you want to see a non-trivial example, check out my own configuration: [here](https://github.com/VonHeikemen/dotfiles/tree/84d6cbb91c242d533ff324a5fdeeae331d286478/.config/sublime-text-3/Packages/User/NvMode).
+
+## Alternatives
+
+If you really, really want something that is closer to VIM check out these:
+
+* [NeoVintageous](https://github.com/NeoVintageous/NeoVintageous) - A fully featured VIM emulation layer.
+* [Vintage Mode](https://www.sublimetext.com/docs/vintage.html) - A plugin that comes bundled with Sublime Text. Offers a basic support for VIM key bindings.
+
+## Further more
+
+If you want to know about more plugins that enable a more keyboard-driven workflow check out these plugins:
+
+* [FileManager](https://packagecontrol.io/packages/FileManager) - It'll help navigate and manage your file without using the sidebar.
+* [AceJump](https://packagecontrol.io/packages/AceJump) - Jump to any location on the visible screen without using the mouse.
+* [BracketHighlighter](https://packagecontrol.io/packages/BracketHighlighter) - Swap, delete, and select the content wrapped between brackets and other types of pairs.
+* [Origami](https://packagecontrol.io/packages/Origami) - Handle groups and panes with grace.
+* [Open Tab List](https://github.com/VonHeikemen/OpenTabList) - A way to navigate throught your opened files without touching your tabs.
 
 ## Support
 
