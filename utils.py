@@ -100,10 +100,13 @@ class NvMoveToFirstCharInLine(sublime_plugin.TextCommand):
     self.view.sel().clear()
     self.view.sel().add_all(newones)
 
-    # Make sublime choose which cursor will show
-    self.view.run_command("move", {"by": "characters", "forward": False})
-    # Go back to the original position
-    self.view.run_command("move", {"by": "characters", "forward": True})
+    if len(newones) > 1:
+      # Make sublime choose which cursor will show
+      self.view.run_command("move", {"by": "characters", "forward": False, "extend": extend})
+      # Go back to the original position
+      self.view.run_command("move", {"by": "characters", "forward": True, "extend": extend})
+    else:
+      self.view.show(newones[0], True)
 
 
 class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
@@ -124,10 +127,13 @@ class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
     self.view.sel().clear()
     self.view.sel().add_all(newones)
 
-    # Make sublime choose which cursor will show
-    self.view.run_command("move", {"by": "characters", "forward": False})
-    # Go back to the original position
-    self.view.run_command("move", {"by": "characters", "forward": True})
+    if len(newones) > 1:
+      # Make sublime choose which cursor will show
+      self.view.run_command("move", {"by": "characters", "forward": False, "extend": extend})
+      # Go back to the original position
+      self.view.run_command("move", {"by": "characters", "forward": True, "extend": extend})
+    else:
+      self.view.show(newones[0], True)
 
 
 class NvPasteAfter(sublime_plugin.TextCommand):
