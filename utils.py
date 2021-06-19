@@ -100,6 +100,11 @@ class NvMoveToFirstCharInLine(sublime_plugin.TextCommand):
     self.view.sel().clear()
     self.view.sel().add_all(newones)
 
+    # Make sublime choose which cursor will show
+    self.view.run_command("move", {"by": "characters", "forward": False})
+    # Go back to the original position
+    self.view.run_command("move", {"by": "characters", "forward": True})
+
 
 class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
@@ -118,6 +123,11 @@ class NvMoveToLastCharInLine(sublime_plugin.TextCommand):
 
     self.view.sel().clear()
     self.view.sel().add_all(newones)
+
+    # Make sublime choose which cursor will show
+    self.view.run_command("move", {"by": "characters", "forward": False})
+    # Go back to the original position
+    self.view.run_command("move", {"by": "characters", "forward": True})
 
 
 class NvPasteAfter(sublime_plugin.TextCommand):
