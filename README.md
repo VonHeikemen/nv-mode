@@ -48,6 +48,10 @@ The default value is `true`. This sets the cursor shape to `block` when `command
 
 The default value is `false`. When set to `true` will highlight the line where the cursor is only in `command_mode`, and will stop when you enter insert mode. 
 
+* `nv_enable_transition_from_visual_to_insert_mode`
+
+The default value is `true`. Enable/disable the keybinding `i` in visual mode (to enter insert mode).
+
 ## Key Bindings
 
 ### Switch between modes

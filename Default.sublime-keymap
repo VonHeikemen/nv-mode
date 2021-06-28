@@ -72,7 +72,10 @@
 	{
 		"keys": ["i"],
 		"command": "nv_enter_insert_mode",
-		"context": [ {"key": "setting.visual_mode", "operand": true } ]
+		"context": [
+			{"key": "setting.visual_mode", "operand": true },
+			{"key": "setting.nv_enable_transition_from_visual_to_insert_mode", "operand": true},
+		]
 	},
 
 	// Normal Mode

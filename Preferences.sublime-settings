@@ -1,5 +1,6 @@
 {
 	"nv_mode_enable_ctrl_w": false,
 	"nv_change_caret_style_in_command_mode": true,
-	"nv_toggle_hightlight_line_on_command_mode": false
+	"nv_toggle_hightlight_line_on_command_mode": false,
+	"nv_enable_transition_from_visual_to_insert_mode": true
 }
