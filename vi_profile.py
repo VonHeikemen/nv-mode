@@ -28,10 +28,10 @@ def exit_normal_mode(view):
     view.settings().set('highlight_line', False)
 
 def clear_selection(view):
-  selection = view.sel()[0].b
-  new_region = sublime.Region(selection, selection)
-  view.sel().clear()
-  view.sel().add(new_region)
+  for sel in view.sel():
+    new_region = sublime.Region(sel.b, sel.b)
+    view.sel().subtract(sel)
+    view.sel().add(new_region)
 
 class NvEnterInsertMode(sublime_plugin.TextCommand):
   def run(self, edit, **kwargs):
